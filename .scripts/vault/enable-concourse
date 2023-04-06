@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source .scripts/server/.environment
+echo "VAULT_ADDR = ${VAULT_ADDR}"
+
+vault secrets enable -path=concourse generic
+# vault secrets enable -version=2 -path=concourse kv
+
+# The following is not necessary when the root token is used by concourse
+# https://developer.hashicorp.com/vault/docs/commands/policy/write
+
+echo "path \"concourse/*\" {capabilities = [\"read\"]}" | vault policy write concourse -
+vault token create --policy concourse --period 10h

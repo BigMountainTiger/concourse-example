@@ -1,0 +1,32 @@
+jobs:
+  - name: apt-update-job
+    plan:
+      - task: install-some-program
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: ubuntu
+              tag: 22.04
+          run:
+            path: bash
+            args:
+              - -c
+              - |
+                whoami
+                ls -la
+                apt --version
+                apt update
+                apt install python3.10 -y
+                apt install python3.10-venv -y
+                ls -l /usr/bin/ | grep python
+                python3.10 --version
+                python3.10 -m venv .env-3.10
+                source .env-3.10/bin/activate
+                which python
+                which pip
+                python --version
+                pip --version
+                pip install pandas
+                pip freeze

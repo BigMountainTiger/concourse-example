@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd .scripts/server/concourse
+pwd
+
+source ../.environment
+docker compose down

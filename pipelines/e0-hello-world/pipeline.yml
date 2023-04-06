@@ -1,0 +1,91 @@
+# https://concourse-ci.org/tutorial-inputs-outputs.html
+# The simple answer is that inputs and outputs are directories that get passed between steps
+
+jobs:
+  - name: hello-world-job
+    plan:
+      - task: step-1
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          outputs:
+            - name: the-artifact-1
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                ls -l .
+                echo "hello from step-1" > the-artifact-1/message
+      - task: step-2
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          outputs:
+            - name: the-artifact-2
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                ls -l .
+                echo "hello from step-2" > the-artifact-2/message
+      - task: read-the-artifact-1
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          inputs:
+            - name: the-artifact-1
+            - name: the-artifact-2
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                echo "From read-the-artifact-1"
+                ls -l .
+                cat the-artifact-1/message
+                cat the-artifact-2/message
+      - task: read-the-artifact-2
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          inputs:
+            - name: the-artifact-1
+            - name: the-artifact-2
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                echo "From read-the-artifact-2"
+                ls -l .
+                cat the-artifact-1/message
+                cat the-artifact-2/message
+
+  - name: another-job
+    plan:
+      - task: step-1
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          outputs:
+            - name: the-artifact-1
+          run:
+            path: echo
+            args: ["From another job"]

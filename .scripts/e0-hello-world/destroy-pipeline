@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# -n => No confirmation required
+fly -t tutorial destroy-pipeline -p e0-hello-world -n

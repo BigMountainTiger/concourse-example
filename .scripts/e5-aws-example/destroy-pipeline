@@ -1,0 +1,4 @@
+#!/bin/bash
+
+EXAMPLE="e5-aws-example"
+fly -t tutorial destroy-pipeline -p ${EXAMPLE} -n

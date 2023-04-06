@@ -1,0 +1,4 @@
+#!/bin/bash
+
+EXAMPLE="e4-prebuilt-docker-image-example"
+fly -t tutorial destroy-pipeline -p ${EXAMPLE} -n

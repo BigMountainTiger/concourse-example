@@ -1,0 +1,4 @@
+#!/bin/bash
+
+fly -t tutorial trigger-job --job e1-auto-pipeline-update-git-example/validate-git-repository --watch
+fly -t tutorial trigger-job --job e1-auto-pipeline-update-git-example/manually-trigger-job --watch

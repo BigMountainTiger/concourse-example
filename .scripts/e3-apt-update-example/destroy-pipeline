@@ -1,0 +1,4 @@
+#!/bin/bash
+
+EXAMPLE="e3-apt-update-example"
+fly -t tutorial destroy-pipeline -p ${EXAMPLE} -n

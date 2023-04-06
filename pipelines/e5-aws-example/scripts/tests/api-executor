@@ -1,0 +1,26 @@
+#!/bin/bash -e
+
+SCRIPT_PATH="$(dirname -- "${BASH_SOURCE[0]}")"
+ROOT_PATH="${SCRIPT_PATH}/../.."
+
+PYTHON_EXE="python3.10"
+
+VIRTUAL_ENV="${ROOT_PATH}/.env"
+if [ ! -d "${VIRTUAL_ENV}" ]; then
+  echo "Creating virtualenv."
+  ${PYTHON_EXE} -m venv ${VIRTUAL_ENV}
+fi
+
+source ${VIRTUAL_ENV}/bin/activate
+which pip
+
+cd $ROOT_PATH/lambdas/api-executor
+python --version
+pwd
+
+pip install -r requirements-dev.txt
+
+# The directory of the test modules can not be named as "test"
+# because "test" is used by python for other purposes.
+echo
+python -m unittest tests.lambda_test

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source .scripts/server/.environment
+echo "VAULT_ADDR = ${VAULT_ADDR}"
+
+SECRET_PATH="Aa/Bb/Cc"
+
+echo
+echo "put secret"
+vault kv put -mount=secret ${SECRET_PATH} key-1=value-1 key-2=value-2
+
+
+echo
+echo "get secret"
+vault kv get -mount=secret -field=key-1 ${SECRET_PATH}
+vault kv get -mount=secret -field=key-2 ${SECRET_PATH}
+
+echo
+echo "delete secret"
+vault kv delete -mount=secret -field=key-1 ${SECRET_PATH}
+vault kv delete -mount=secret -field=key-2 ${SECRET_PATH}
+
+echo
+echo "get secret, already deleted"
+vault kv get -mount=secret -field=key-1 ${SECRET_PATH}
+vault kv get -mount=secret -field=key-2 ${SECRET_PATH}
+

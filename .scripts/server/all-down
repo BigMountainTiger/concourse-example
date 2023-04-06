@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Stopping the vault server"
+.scripts/server/vault/down
+
+echo "Stopping the concourse server"
+.scripts/server/concourse/down

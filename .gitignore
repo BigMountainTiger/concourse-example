@@ -1,0 +1,4 @@
+.terraform
+.terraform.lock.hcl
+.env-3.10
+__pycache__

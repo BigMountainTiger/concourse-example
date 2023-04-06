@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# https://docs.aws.amazon.com/cli/latest/reference/sts/get-session-token.html
+# https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html
+
+EXAMPLE="e4-prebuilt-docker-image-example"
+
+fly -t tutorial trigger-job --job ${EXAMPLE}/prebuilt-docker-image-job --watch

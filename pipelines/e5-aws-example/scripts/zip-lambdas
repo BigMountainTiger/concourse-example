@@ -1,0 +1,41 @@
+#!/bin/bash -e
+
+SCRIPT_PATH="$(dirname -- "${BASH_SOURCE[0]}")"
+
+ROOT_PATH="${SCRIPT_PATH}/.."
+ARTIFACTS_PATH="${ROOT_PATH}/.artifacts"
+
+rm -rf ${ARTIFACTS_PATH}
+mkdir ${ARTIFACTS_PATH}
+
+PYTHON_EXE="python3.10"
+
+VIRTUAL_ENV="${ROOT_PATH}/.env"
+if [ ! -d "${VIRTUAL_ENV}" ]; then
+  echo "Creating virtualenv."
+  ${PYTHON_EXE} -m venv ${VIRTUAL_ENV}
+fi
+
+source ${VIRTUAL_ENV}/bin/activate
+which pip
+
+zip_lambda () {
+
+    LAMBDA=$1
+
+    LAMBDA_SOURCE_PATH="${ROOT_PATH}/lambdas/${LAMBDA}"
+    LAMBDA_DESTIN_PATH="${ARTIFACTS_PATH}/${LAMBDA}"
+    LAMBDA_ZIP="${ARTIFACTS_PATH}/${LAMBDA}.zip"
+
+    mkdir -p "${LAMBDA_DESTIN_PATH}"
+    cp -r "${LAMBDA_SOURCE_PATH}/src" "${LAMBDA_DESTIN_PATH}"
+
+    pip install -r ${LAMBDA_SOURCE_PATH}/requirements.txt -t ${LAMBDA_DESTIN_PATH}
+
+    pushd .
+    cd "${LAMBDA_DESTIN_PATH}/"
+    zip -r "../${LAMBDA}.zip" *
+    popd
+}
+
+zip_lambda api-executor

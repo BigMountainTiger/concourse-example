@@ -1,0 +1,59 @@
+resources:
+  - name: repo
+    type: git
+    icon: github
+    source:
+      uri: "https://github.com/BigMountainTiger/concourse-example.git"
+      branch: master
+
+jobs:
+  - name: update-pipeline
+    public: true
+    plan:
+      - get: repo
+        trigger: true
+      - set_pipeline: self
+        file: repo/pipelines/e1-auto-pipeline-update-git-example/pipeline.yml
+
+  - name: validate-git-repository
+    public: true
+    plan:
+      - get: repo
+        trigger: true
+        passed: [update-pipeline]
+      - task: cat-rpipeline.yml
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          inputs:
+            - name: repo
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                pwd
+                ls -la /etc
+                which apt
+                cat repo/pipelines/e1-auto-pipeline-update-git-example/pipeline.yml
+
+  - name: manually-trigger-job
+    public: true
+    plan:
+      - get: repo
+        passed: [validate-git-repository]
+      - task: echo-something
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          inputs:
+            - name: repo
+          run:
+            path: echo
+            args: ["Need manually trigger"]

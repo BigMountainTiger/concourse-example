@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# https://docs.aws.amazon.com/cli/latest/reference/sts/get-session-token.html
+# https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_use-resources.html
+
+# Vault use environment to keep the path and credentials
+source .scripts/server/.environment
+echo "VAULT_ADDR = ${VAULT_ADDR}"
+
+# CREDENTIAL=$(aws sts get-session-token | jq .Credentials)
+# AWS_ACCESS_KEY_ID=$(echo $CREDENTIAL | jq -r .AccessKeyId)
+# AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIAL | jq -r .SecretAccessKey)
+# AWS_SESSION_TOKEN=$(echo $CREDENTIAL | jq -r .SessionToken)
+
+AWS_ACCESS_KEY_ID=$(cat ~/.aws/credentials | grep aws_access_key_id)
+AWS_SECRET_ACCESS_KEY=$(cat ~/.aws/credentials | grep aws_secret_access_key)
+
+AWS_ACCESS_KEY_ID=$(cut -d "=" -f2 <<< "$AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY=$(cut -d "=" -f2 <<< "$AWS_SECRET_ACCESS_KEY")
+
+# Put the aws credentials to vault
+SECRET_PATH="main"
+vault kv put -mount=concourse "${SECRET_PATH}/AWS_ACCESS_KEY_ID" value=${AWS_ACCESS_KEY_ID}
+vault kv put -mount=concourse "${SECRET_PATH}/AWS_SECRET_ACCESS_KEY" value=${AWS_SECRET_ACCESS_KEY}
+

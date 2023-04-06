@@ -1,0 +1,4 @@
+#!/bin/bash
+
+.scripts/server/all-down
+.scripts/server/all-up

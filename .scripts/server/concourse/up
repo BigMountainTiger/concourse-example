@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cd .scripts/server/concourse
+pwd
+
+source ../.environment
+
+docker compose up -d
+
+SLEEP=30
+echo "Wait for ${SLEEP} seconds, so the server is ready"
+sleep ${SLEEP}
+
+echo
+fly -t tutorial login \
+    -c http://localhost:8080 \
+    -u test -p test \
+    --team-name main
+
+fly targets

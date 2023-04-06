@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# EXAMPLE is the pipeline name
+EXAMPLE="e2-vault-parameters"
+
+cd pipelines/${EXAMPLE}/
+pwd
+
+fly -t tutorial set-pipeline -p ${EXAMPLE} -c pipeline.yml -n
+fly -t tutorial unpause-pipeline -p ${EXAMPLE}

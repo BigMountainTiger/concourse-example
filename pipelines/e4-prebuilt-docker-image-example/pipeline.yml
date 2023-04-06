@@ -1,0 +1,19 @@
+jobs:
+  - name: prebuilt-docker-image-job
+    plan:
+      - task: task-no-0
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: ghcr.io/bigmountaintiger/aws-build-image
+              tag: 1.0.0
+          run:
+            path: bash
+            args:
+              - -c
+              - |
+                ls -la
+
+                

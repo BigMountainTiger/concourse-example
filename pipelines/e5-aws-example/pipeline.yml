@@ -1,0 +1,32 @@
+resources:
+  - name: git-repo
+    type: git
+    icon: github
+    source:
+      uri: "https://github.com/BigMountainTiger/concourse-example.git"
+      branch: master
+
+jobs:
+  - name: e4-aws-example
+    plan:
+      - get: git-repo
+      - task: e4-aws-example-task
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: ghcr.io/bigmountaintiger/aws-build-image
+              tag: 1.0.0
+          inputs:
+            - name: git-repo
+          run:
+            path: bash
+            args:
+              - -c
+              - |
+                git-repo/pipelines/e5-aws-example/scripts/aws-deploy
+          params:
+            AWS_ACCESS_KEY_ID: ((AWS_ACCESS_KEY_ID))
+            AWS_SECRET_ACCESS_KEY: ((AWS_SECRET_ACCESS_KEY))
+                

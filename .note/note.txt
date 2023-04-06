@@ -1,0 +1,19 @@
+docker
+https://docs.docker.com/engine/install/ubuntu/
+https://docs.docker.com/engine/install/linux-postinstall/
+
+concourse
+https://concourse-ci.org/docs.html
+
+vault
+https://developer.hashicorp.com/vault
+https://developer.hashicorp.com/vault/downloads
+https://developer.hashicorp.com/vault/tutorials/getting-started
+
+install vault to run the vault command cli
+vault is a single executable - download and extract the zip
+
+Concourse & vault
+https://concourse-ci.org/vault-credential-manager.html
+https://pirix-tech.medium.com/integrate-concourse-with-vault-for-credential-management-b87130c32972
+

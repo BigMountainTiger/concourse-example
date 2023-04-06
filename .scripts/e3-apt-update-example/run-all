@@ -1,0 +1,6 @@
+#!/bin/bash
+
+EXAMPLE="e3-apt-update-example"
+
+.scripts/${EXAMPLE}/set-pipeline
+.scripts/${EXAMPLE}/trigger-jobs

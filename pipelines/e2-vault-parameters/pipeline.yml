@@ -1,0 +1,19 @@
+jobs:
+  - name: load-valut-parameter-job
+    plan:
+      - task: step-1
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                ls -la
+                echo ${TOP_SERET}
+          params:
+            TOP_SERET: ((topsecret))

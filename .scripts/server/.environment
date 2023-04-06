@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export VAULT_PORT=8200
+export VAULT_TOKEN="ok-ok"
+
+export DOCKER_REGISTRY_PORT=5000
+
+export VAULT_ADDR="http://localhost:${VAULT_PORT}"

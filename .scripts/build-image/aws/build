@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+
+SCRIPT_PATH="$(dirname -- "${BASH_SOURCE[0]}")"
+echo $SCRIPT_PATH
+
+source ${SCRIPT_PATH}/git-token
+
+REGISTRY="ghcr.io/${CR_USER}"
+TAG="1.0.0"
+IMAGE_NAME="${REGISTRY}/aws-build-image:${TAG}"
+
+docker build -t ${IMAGE_NAME} -f ${SCRIPT_PATH}/Dockerfile ${SCRIPT_PATH}
+
+echo
+echo "Pushing docker image ${IMAGE_NAME}"
+echo $CR_PAT | docker login ghcr.io -u ${CR_USER} --password-stdin
+docker push ${IMAGE_NAME} 

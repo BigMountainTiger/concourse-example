@@ -1,0 +1,4 @@
+#!/bin/bash
+
+EXAMPLE="e2-vault-parameters"
+fly -t tutorial destroy-pipeline -p ${EXAMPLE} -n

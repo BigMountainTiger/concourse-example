@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd .scripts/server/vault
+pwd
+
+source ../.environment
+docker compose down

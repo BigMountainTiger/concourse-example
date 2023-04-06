@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd pipelines/e1-auto-pipeline-update-git-example/
+pwd
+
+fly -t tutorial set-pipeline -p e1-auto-pipeline-update-git-example -c pipeline.yml -n
+fly -t tutorial unpause-pipeline -p e1-auto-pipeline-update-git-example

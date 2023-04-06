@@ -1,0 +1,4 @@
+#!/bin/bash
+
+EXAMPLE="e3-apt-update-example"
+fly -t tutorial trigger-job --job ${EXAMPLE}/apt-update-job --watch

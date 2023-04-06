@@ -1,0 +1,3 @@
+#!/bin/bash
+
+fly -t tutorial destroy-pipeline -p e1-auto-pipeline-update-git-example -n

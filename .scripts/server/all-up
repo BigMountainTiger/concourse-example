@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Starting the vault server"
+.scripts/server/vault/up
+
+echo "Starting the concourse server"
+.scripts/server/concourse/up
+
+echo
+echo "Enable Vault concourse"
+.scripts/vault/enable-concourse

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+EXAMPLE="e2-vault-parameters"
+fly -t tutorial trigger-job --job ${EXAMPLE}/load-valut-parameter-job --watch
