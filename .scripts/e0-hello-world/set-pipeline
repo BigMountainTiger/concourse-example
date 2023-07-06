@@ -3,5 +3,9 @@
 cd pipelines/e0-hello-world/
 pwd
 
-fly -t tutorial set-pipeline -p e0-hello-world -c pipeline.yml -n
+fly -t tutorial set-pipeline \
+    -p e0-hello-world -c pipeline.yml \
+    --load-vars-from params-1.yml \
+    --load-vars-from params-2.yml -n
+
 fly -t tutorial unpause-pipeline -p e0-hello-world

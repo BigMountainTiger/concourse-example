@@ -2,4 +2,4 @@
 
 EXAMPLE="e5-aws-example"
 
-fly -t tutorial trigger-job --job ${EXAMPLE}/e4-aws-example --watch
+fly -t tutorial trigger-job --job ${EXAMPLE}/e5-aws-example --watch

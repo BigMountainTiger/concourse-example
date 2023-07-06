@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SCRIPT_PATH="$(dirname -- "${BASH_SOURCE[0]}")"
+echo $SCRIPT_PATH
+
+$SCRIPT_PATH/set-pipeline
+
+# Need to push to git as concourse pulling from GTI
+$SCRIPT_PATH/trigger-jobs
