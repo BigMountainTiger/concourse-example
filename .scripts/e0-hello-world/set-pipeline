@@ -3,5 +3,14 @@
 cd pipelines/e0-hello-world/
 pwd
 
-fly -t tutorial set-pipeline -p e0-hello-world -c pipeline.yml -n
+# Parameters can be passed in by
+# 1. "--load-vars-from"
+# 2. the "-v" option
+
+fly -t tutorial set-pipeline \
+    -p e0-hello-world -c pipeline.yml \
+    -v env_message="A message from the -v option" \
+    --load-vars-from params-1.yml \
+    --load-vars-from params-2.yml -n
+
 fly -t tutorial unpause-pipeline -p e0-hello-world

@@ -8,7 +8,7 @@ source ../.environment
 docker compose up -d
 
 SLEEP=30
-echo "Wait for ${SLEEP} seconds, so the server is ready"
+echo "Wait for ${SLEEP} seconds, so the server is ready before trying to login to the concourse server"
 sleep ${SLEEP}
 
 echo

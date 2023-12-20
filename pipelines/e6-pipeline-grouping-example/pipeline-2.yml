@@ -1,0 +1,22 @@
+# Instanced Pipelines
+# https://concourse-ci.org/instanced-pipelines.html
+
+jobs:
+  - name: example-job
+    plan:
+      - task: simple-task
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          params:
+            instance_version: ((instance_version))
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                echo "This is from the pipeline-2.yml"
+                echo "This the instance version ${instance_version}"

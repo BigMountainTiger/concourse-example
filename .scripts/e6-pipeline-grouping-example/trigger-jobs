@@ -1,0 +1,10 @@
+#!/bin/bash
+
+trigger_job() {
+
+    VERSION="$1"
+    fly -t tutorial trigger-job --job e6-pipeline-grouping-example/instance_version:${VERSION}/example-job --watch
+}
+
+trigger_job "1.0.0"
+trigger_job "2.0.0"

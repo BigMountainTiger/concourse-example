@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd pipelines/e6-pipeline-grouping-example/
+pwd
+
+
+set_pipeline() {
+    YAML_FILE="$1"
+    VERSION="$2"
+
+    fly -t tutorial set-pipeline \
+        -p e6-pipeline-grouping-example -c ${YAML_FILE} \
+        --instance-var instance_version=${VERSION} \
+        -n
+
+    fly -t tutorial unpause-pipeline -p e6-pipeline-grouping-example/instance_version:${VERSION}
+}
+
+# The difference instance pipelines can use different pipeline yaml files
+set_pipeline "pipeline-1.yml" "1.0.0"
+set_pipeline "pipeline-2.yml" "2.0.0"

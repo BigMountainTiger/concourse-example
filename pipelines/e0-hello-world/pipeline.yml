@@ -87,5 +87,34 @@ jobs:
           outputs:
             - name: the-artifact-1
           run:
-            path: echo
-            args: ["From another job"]
+            path: sh
+            args:
+              - -cx
+              - |
+                echo "Parameters passed in from the --load-vars-from option"
+                echo ${message_1}
+                echo ${message_2}
+          params:
+            message_1: ((message-1))
+            message_2: ((message-2))
+
+  - name: a-job-set-by-v-variables
+    plan:
+      - task: step-1
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          outputs:
+            - name: the-artifact-1
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                echo "Parameters passed in by environmet variable"
+                echo ${env_message}
+          params:
+            env_message: ((env_message))

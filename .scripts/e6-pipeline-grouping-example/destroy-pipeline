@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# -n => No confirmation required
+
+destroy_pipeline() {
+    VERSION="$1"
+
+    fly -t tutorial destroy-pipeline -p e6-pipeline-grouping-example/instance_version:${VERSION} -n
+}
+
+destroy_pipeline "1.0.0"
+destroy_pipeline "2.0.0"

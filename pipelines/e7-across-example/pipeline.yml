@@ -1,0 +1,107 @@
+# https://concourse-ci.org/across-step.html
+
+resources:
+  - name: repo
+    type: git
+    icon: github
+    source:
+      uri: "https://github.com/BigMountainTiger/concourse-example.git"
+      branch: master
+
+jobs:
+  - name: across-job
+    plan:
+      - get: repo
+        params:
+          depth: 1
+      - task: list-directories
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: ghcr.io/bigmountaintiger/aws-build-image
+              tag: 1.0.0
+          inputs:
+            - name: repo
+          outputs:
+            - name: directory-list
+          run:
+            path: bash
+            args:
+              - -c
+              - |
+                # The output "directory-list" is only accessible from $PWD
+                ROOT_DIR=$PWD
+                cd repo/pipelines/e7-across-example/list-of-directories
+                l=$(ls -d */)
+                l=$(echo $l | tr -d '/')
+                l=$(echo $l | sed -e 's/\s\+/,/g')
+
+                ps -p $$
+                IFS=',' read -r -a array <<< "$l"
+                J=""
+                for e in "${array[@]}"
+                do
+                  J="$J,\"$e\""
+                done
+
+                J="[${J:1}]"
+                echo $J
+
+                cd $ROOT_DIR
+                echo "$J" > directory-list/list
+
+      - load_var: directory-list
+        format: json
+        file: directory-list/list
+        
+      - task: display-the-directory-list
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          inputs:
+            - name: directory-list
+          params:
+            directory_list: ((.:directory-list))
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                echo "This is diplaying the variable passed in from the load_var: directory-list step"
+                echo ${directory_list}
+                echo "This task is just display the directory list"
+                cat directory-list/list
+      
+      - across:
+          - var: directory
+            values: ((.:directory-list))
+        do:
+          - task: directory_subtask
+            config:
+              platform: linux
+              image_resource:
+                type: registry-image
+                source:
+                  repository: busybox
+              inputs:
+                - name: repo
+              params:
+                directory: ((.:directory))
+              run:
+                path: sh
+                args:
+                  - -cx
+                  - |
+                    echo "Running the subtask ${directory}"
+                    cd repo/pipelines/e7-across-example/list-of-directories/${directory}
+                    pwd
+                    ls -la
+
+
+
+

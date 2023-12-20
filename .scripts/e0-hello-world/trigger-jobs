@@ -1,4 +1,9 @@
 #!/bin/bash
 
 fly -t tutorial trigger-job --job e0-hello-world/hello-world-job --watch
+
+echo
 fly -t tutorial trigger-job --job e0-hello-world/another-job --watch
+
+echo
+fly -t tutorial trigger-job --job e0-hello-world/a-job-set-by-v-variables --watch

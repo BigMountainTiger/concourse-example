@@ -7,10 +7,10 @@ resources:
       branch: master
 
 jobs:
-  - name: e4-aws-example
+  - name: e5-aws-example
     plan:
       - get: git-repo
-      - task: e4-aws-example-task
+      - task: aws-terraform-deploy-task
         config:
           platform: linux
           image_resource:

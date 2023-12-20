@@ -17,3 +17,7 @@ Concourse & vault
 https://concourse-ci.org/vault-credential-manager.html
 https://pirix-tech.medium.com/integrate-concourse-with-vault-for-credential-management-b87130c32972
 
+Concourse steps
+https://concourse-ci.org/steps.html
+
+Pipeline -> Job -> Step, with a Task is a special type of step

@@ -25,6 +25,12 @@ services:
       CONCOURSE_POSTGRES_USER: concourse_user
       CONCOURSE_POSTGRES_PASSWORD: concourse_pass
       CONCOURSE_POSTGRES_DATABASE: concourse
+
+      # https://concourse-ci.org/instanced-pipelines.html
+      # https://concourse-ci.org/across-step.html
+      CONCOURSE_ENABLE_PIPELINE_INSTANCES: true
+      CONCOURSE_ENABLE_ACROSS_STEP: true
+
       # CONCOURSE_EXTERNAL_URL: http://localhost:8080
       CONCOURSE_ADD_LOCAL_USER: test:test
       CONCOURSE_MAIN_TEAM_LOCAL_USER: test

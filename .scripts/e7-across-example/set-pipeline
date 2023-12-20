@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd pipelines/e7-across-example/
+pwd
+
+fly -t tutorial set-pipeline \
+    -p e7-across-example -c pipeline.yml -n
+
+fly -t tutorial unpause-pipeline -p e7-across-example
